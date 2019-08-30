@@ -3,12 +3,24 @@ const products = require('../products.json')
 
 
 
-const getProducts = (req, res) => {
-    res.status(200).send(products);
+
+module.exports = { 
+    
+getProducts : (req, res) => {
+    
+    if(!req.query.price){
+    res.status(200).send(products)
+    } else {
+        console.log('hello')
+    const enteredPrice = parseInt(req.query.price)
+    console.log(enteredPrice)
+    const moreThan = products.filter( (product) => product.price >= enteredPrice)
+    res.status(200).send(moreThan)
+    }
 }
 
-
-const getProductsByID = (req, res) => {
+,
+ getProductsByID : (req, res) => {
     const id = parseInt(req.params.id)
     if(isNaN(id)){
         res.sendStatus(400)
@@ -21,12 +33,4 @@ const getProductsByID = (req, res) => {
     }
 
 }
-
-const filterByPrice = (req, res) =>{
-    const price = parseInt(req.params.price)
-    const moreThan = prodcuts.filter( price => products.price >= price)
-    res.status(200)
-
 }
-module.exports = getProducts
-module.exports = getProductsByID
